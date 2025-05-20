@@ -11,11 +11,14 @@ requires-python = ">=3.12"
 dependencies = [
     "librosa>=0.11.0",
     "matplotlib>=3.10.3",
+    "openpyxl>=3.1.5",
     "pandas>=2.2.3",
     "pytest>=8.3.5",
     "scikit-image>=0.25.2",
     "torch>=2.7.0",
+    "torchvision>=0.22.0",
+    "tqdm>=4.67.1",
 ]
 
 [tool.setuptools]
-packages = ["audio", "features", "preprocessing", "segmentation", "utils"]
+packages = ["audio", "features", "preprocessing", "segmentation", "utils", "classification"]

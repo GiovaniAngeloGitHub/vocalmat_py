@@ -5,6 +5,7 @@ import librosa
 import librosa.display
 import matplotlib.pyplot as plt
 from torch.utils.data import Dataset
+from torch import tensor, long
 from PIL import Image
 import io
 
@@ -18,7 +19,7 @@ class USVDataset(Dataset):
         return len(self.annotations)
 
     def __getitem__(self, idx):
-        audio_path = os.path.join(self.audio_dir, self.annotations.iloc[idx, 0])
+        audio_path = os.path.join(self.audio_dir, self.annotations.iloc[idx]['audio_file'])
         y, sr = librosa.load(audio_path, sr=None)
         S = librosa.feature.melspectrogram(y=y, sr=sr)
         S_dB = librosa.power_to_db(S, ref=np.max)
@@ -34,7 +35,8 @@ class USVDataset(Dataset):
         buf.close()
         plt.close(fig)
 
-        label = self.annotations.iloc[idx, 1]
+        label = int(self.annotations.iloc[idx]['label'])
+        label = tensor(label, dtype=long)
 
         if self.transform:
             image = self.transform(image)
